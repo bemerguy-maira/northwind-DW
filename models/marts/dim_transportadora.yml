@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: dim_transportadora
+    description: Dimensão de transportadoras da Northwind. Relação de transportadoras por país.
+    columns:
+      - name: id_transportadora
+        description: Chave primária da dimensão de transportadoras.
+        tests:
+          - not_null
