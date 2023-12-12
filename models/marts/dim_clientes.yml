@@ -5,7 +5,7 @@ models:
     description: Essa é a dimensão com informações dos clientes da northwind.
     columns:
       - name: id_cliente
-        description: Chave primária da dimensão de clientes.
+        description: Essa é a chave primaria da dimensão clientes.
         tests:
           - unique
           - not_null

@@ -33,8 +33,9 @@ sources:
             - not_null
 
     - name: shippers
-      description: informações das trabsportadoras da northwind.
+      description: informações das transportadoras da northwind.
       columns: 
         - name: shipper_id
           tests:
+            - unique
             - not_null

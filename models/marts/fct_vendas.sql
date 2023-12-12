@@ -3,14 +3,27 @@ with
         select *
         from {{ ref('dim_funcionarios') }}
     )
+
     , produtos as (
         select *
         from {{ ref('dim_produtos') }}
     )
+
+    , clientes as (
+        select *
+        from {{ ref('dim_clientes') }}
+    )
+
+    , transportadoras as (
+        select *
+        from {{ ref('dim_transportadora') }}
+    )
+
     , int_vendas as (
         select *
         from {{ ref('int_vendas__pedido_itens') }}
     )
+
     , joined_tabelas as (
         select
             int_vendas.sk_pedido_item
@@ -42,12 +55,19 @@ with
             , funcionarios.cargo_funcionario
             , funcionarios.dt_nascimento_funcionario
             , funcionarios.dt_contratacao
+            , clientes.nome_cliente
+            , transportadoras.nome_transportadora
         from int_vendas
         left join produtos on
             int_vendas.id_produto = produtos.id_produto
         left join funcionarios on
             int_vendas.id_funcionario = funcionarios.id_funcionario
+        left join clientes on
+            int_vendas.id_cliente = clientes.id_cliente
+        left join transportadoras on
+            int_vendas.id_transportadora = transportadoras.id_transportadora
     )
+
     , transformacoes as (
         select
             *
@@ -60,6 +80,7 @@ with
             , frete / count(id_pedido) over(partition by id_pedido) as frete_ponderado
         from joined_tabelas
     )
+
     , select_final as (
         select
             /* Chaves */
@@ -98,7 +119,10 @@ with
             , cargo_funcionario
             , dt_nascimento_funcionario
             , dt_contratacao
+            , nome_cliente
+            , nome_transportadora
         from transformacoes
     )
+
 select *
 from select_final
