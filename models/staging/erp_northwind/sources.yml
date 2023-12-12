@@ -1,4 +1,5 @@
 version: 2
+
 sources:
   - name: erp
     description: Fonte SAP de vendas da Northwind
@@ -13,3 +14,28 @@ sources:
         
     - name: categories
     - name: suppliers
+    - name: employees
+    - name: orders
+      description: uma linha por pedido (por Nota Fiscal). Inclui pedidos cancelados e deletados.
+      columns: 
+        - name: order_id
+          tests:
+            - unique
+            - not_null
+    
+    - name: order_details
+    - name: customers
+      description: informações dos clientes da northwind.
+      columns: 
+        - name: customer_id
+          tests:
+            - unique
+            - not_null
+
+    - name: shippers
+      description: informações das transportadoras da northwind.
+      columns: 
+        - name: shipper_id
+          tests:
+            - unique
+            - not_null
